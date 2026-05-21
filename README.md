@@ -1,50 +1,34 @@
-# expo-chessboard example app
+# Ajedrez — Chess App
 
-Bare Expo app that consumes `@og-nav/expo-chessboard` via `file:..` and
-exercises every public feature. Doubles as the manual smoke-test pass
-before publishing.
+Expo (SDK 54) chess application built on top of `@og-nav/expo-chessboard`. Features three game modes, Stockfish engine integration, i18n (en/es), dark mode, and a comprehensive smoke-test suite for manual QA.
+
+## Modes
+
+- **Random Bot** — opponent plays random legal moves
+- **Stockfish** — play against a real chess engine (WASM via WebView) with adjustable skill level (0–20)
+- **1v1 Local** — two players on the same device; board flips after each move
 
 ## Setup
 
 ```bash
-# from the package root
-pnpm build           # the example reads from ../dist
-cd example
-npm install
-npm run ios          # or `npm run android`
+pnpm install
+npx expo run:ios    # or `npx expo run:android`
 ```
 
-The package is symlinked into `example/node_modules/@og-nav/expo-chessboard`
-via `file:..`, so any change to `src/` followed by `pnpm build` is
-picked up by Metro after a reload — no `npm install` needed between
-edits.
+## Structure
 
-## Tabs
+- `app/(tabs)/play/` — game screen (mode selector + play session)
+- `app/(tabs)/smoke/` — 24+ self-contained test cards exercising every chessboard feature
+- `lib/stockfish-engine.ts` / `lib/stockfish-webview.tsx` — Stockfish UCI communication
+- `lib/random-bot.ts` — random move picker
+- `lib/i18n.tsx` — Spanish/English translation provider
+- `components/` — reusable UI components (haptic tab, smoke card, body scroll view)
+- `constants/theme.ts` — light/dark color definitions
 
-- **Play** — full game against a random-move bot. Exercises drag,
-  tap-to-move, capture sounds, the imperative `animateMove`, and
-  end-of-game state (checkmate / stalemate / draw).
-- **Smoke** — scrollable list of self-contained test cards. Each card
-  has its own preset board, a description of what to do, and (where
-  useful) extra controls (Undo/Redo, Bot plays). The post-action
-  state of each card IS the visual confirmation. This is the manual
-  smoke-test list — anything broken here is broken in the library.
+## Tech Stack
 
-## What this app proves
+Expo SDK 54, React Native 0.81, expo-router (native tabs), Reanimated 4, Gesture Handler 2, chess.ts, Stockfish WASM, expo-audio, expo-haptics.
 
-- The package builds and resolves under a real Metro instance with
-  the standard Expo SDK 54 peer-dep set
-- Every prop on `<Chessboard>` works at runtime, not just in Jest
-- Reanimated worklets, gesture handling, expo-audio, and expo-haptics
-  all wire up correctly
-- iOS large-title chrome and `expo-blur`-backed tab bar play nicely
-  with the board (no clipping, no inset surprises)
+---
 
-## iOS-only chrome
-
-The collapsing large-title header and the blur tab bar are
-iOS-native (`react-native-screens` + `expo-blur` + a Stack with
-`headerLargeTitle: true`). On Android the header falls back to a
-plain bar — no Reanimated re-implementation. Same code; the
-`process.env.EXPO_OS !== "ios"` guard in each per-tab `_layout.tsx`
-short-circuits the iOS chrome opts on Android.
+*README adaptado del template original de `@og-nav/expo-chessboard/example`.*
