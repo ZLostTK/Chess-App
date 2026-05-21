@@ -128,7 +128,6 @@ function ModeSelector({ onSelect }: { onSelect: (m: GameMode) => void }) {
               },
             ]}
           >
-            <View style={[selStyles.accentBar, { backgroundColor: m.accent }]} />
             <View style={selStyles.iconWrap}>{m.icon}</View>
             <View style={selStyles.cardText}>
               <Text
@@ -428,7 +427,10 @@ function PlaySession({
 
           <Pressable
             onPress={() => {
-              // Restart the same mode
+              chess.reset();
+              setFlipped(false);
+              if (botTimer.current) clearTimeout(botTimer.current);
+              bump();
               ref.current?.reset?.();
             }}
             style={({ pressed }) => [
