@@ -52,7 +52,28 @@ const translations = {
     "smoke.title": "Smoke list",
     "smoke.desc1": "This screen is the manual test pass for @og-nav/expo-chessboard. Each card is a self-contained example of one feature or one fixed bug. Scroll through, do the listed action, and the post-action board state IS the visual confirmation it works.",
     "smoke.desc2": "Why it exists: Jest can verify pure logic but it can't verify gestures, animation timing, sound playback, or Reanimated UI-thread state machines. Those need a real device.",
-    "smoke.desc3": "What's covered: every public prop, every imperative ref method, both controlled and uncontrolled modes, every theme, premoves, history scrubbing, all special chess moves (castle / en passant / promotion), sounds, highlights, arrows, custom piece rendering, and a regression block."
+    "smoke.desc3": "What's covered: every public prop, every imperative ref method, both controlled and uncontrolled modes, every theme, premoves, history scrubbing, all special chess moves (castle / en passant / promotion), sounds, highlights, arrows, custom piece rendering, and a regression block.",
+    // Settings
+    "settings.title": "Settings",
+    "settings.autoflip": "Auto-Flip Board",
+    "settings.autoflip.desc": "In 1v1 mode, automatically rotates the board so the player whose turn it is faces their own pieces.",
+    "settings.showCoordinates": "Show Coordinates",
+    "settings.showCoordinates.desc": "Displays board ranks (1-8) and files (A-H) along the edges of the board.",
+    "settings.theme": "Board Theme",
+    "settings.theme.desc": "Selects the color palette of the board squares. Options: Blue, Green, or Wood.",
+    "settings.piecesFormat": "Piece Style",
+    "settings.piecesFormat.desc": "Choose between the standard graphical PNG chess pieces or classic text-based Unicode chess glyphs.",
+    "settings.sounds": "Sound Effects",
+    "settings.sounds.desc": "Enables or disables sound effects for moves, captures, checks, and game-ending events.",
+    "settings.premoves": "Premoves vs CPU",
+    "settings.premoves.desc": "Enables the ability to make moves ahead of time while the CPU bot is thinking.",
+    "settings.lang": "Language",
+    "settings.lang.desc": "Switch the app language between English and Spanish.",
+    "settings.skillLevel": "Bot Skill Level",
+    "settings.skillLevel.desc": "Sets the strength of the Stockfish engine, from 0 (easiest) to 20 (Grandmaster level).",
+    "settings.help.title": "About Option",
+    "settings.help.close": "Close",
+    "nav.settings": "Settings"
   },
   es: {
     // Mode Selector
@@ -103,7 +124,28 @@ const translations = {
     "smoke.title": "Lista de pruebas (Smoke)",
     "smoke.desc1": "Esta pantalla es la prueba manual de @og-nav/expo-chessboard. Cada tarjeta es un ejemplo de una característica o un bug solucionado. Desplázate, haz la acción y el estado final del tablero ES la confirmación visual de que funciona.",
     "smoke.desc2": "Por qué existe: Jest verifica la lógica pura pero no puede verificar gestos, animaciones, sonidos o máquinas de estado en la UI. Eso necesita un dispositivo real.",
-    "smoke.desc3": "Qué cubre: cada prop pública, cada método imperativo ref, ambos modos controlados y no controlados, temas, pre-movimientos, rebobinado de historia, movimientos especiales, sonidos, resaltados, flechas y un bloque de regresión."
+    "smoke.desc3": "Qué cubre: cada prop pública, cada método imperativo ref, ambos modos controlados y no controlados, temas, pre-movimientos, rebobinado de historia, movimientos especiales, sonidos, resaltados, flechas y un bloque de regresión.",
+    // Settings
+    "settings.title": "Configuración",
+    "settings.autoflip": "Voltear Tablero Automáticamente",
+    "settings.autoflip.desc": "En modo 1v1 local, rota el tablero automáticamente en el turno de cada jugador para que siempre juegue de frente.",
+    "settings.showCoordinates": "Mostrar Coordenadas",
+    "settings.showCoordinates.desc": "Habilita las letras A-H y los números 1-8 en los bordes del tablero.",
+    "settings.theme": "Tema del Tablero",
+    "settings.theme.desc": "Cambia los colores de las casillas del tablero de ajedrez (Azul, Verde o Madera).",
+    "settings.piecesFormat": "Estilo de Piezas",
+    "settings.piecesFormat.desc": "Selecciona si mostrar las piezas en formato clásico de imágenes PNG o en formato de símbolos de texto Unicode.",
+    "settings.sounds": "Efectos de Sonido",
+    "settings.sounds.desc": "Activa o desactiva los efectos de sonido de movimientos, capturas, jaques y fin de la partida.",
+    "settings.premoves": "Pre-movimientos contra CPU",
+    "settings.premoves.desc": "Permite programar una jugada de antemano mientras el bot de la computadora está pensando.",
+    "settings.lang": "Idioma",
+    "settings.lang.desc": "Cambia el idioma de la aplicación entre inglés y español.",
+    "settings.skillLevel": "Dificultad del Bot",
+    "settings.skillLevel.desc": "Ajusta la fuerza del motor Stockfish. El nivel 0 es el más fácil y el nivel 20 equivale a un Gran Maestro.",
+    "settings.help.title": "¿Qué hace esto?",
+    "settings.help.close": "Cerrar",
+    "nav.settings": "Ajustes"
   }
 } as const;
 

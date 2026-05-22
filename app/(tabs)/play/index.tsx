@@ -1,10 +1,8 @@
-import { Chessboard } from "@og-nav/expo-chessboard";
-import type { ChessboardRef } from "@og-nav/expo-chessboard";
+import { Chessboard, type PieceType, type ChessboardRef } from "@og-nav/expo-chessboard";
 import { Chess } from "chess.ts";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   Pressable,
-  ScrollView,
   StyleSheet,
   Text,
   useColorScheme,
@@ -20,6 +18,20 @@ import { pickRandomMove } from "@/lib/random-bot";
 import { useStockfish } from "@/lib/stockfish-engine";
 import { StockfishWebView } from "@/lib/stockfish-webview";
 import type { StockfishWebViewRef } from "@/lib/stockfish-webview";
+import { useSettings } from "@/lib/settings";
+
+const UNICODE_PIECES: Record<PieceType, string> = {
+  wk: "♔", wq: "♕", wr: "♖", wb: "♗", wn: "♘", wp: "♙",
+  bk: "♚", bq: "♛", br: "♜", bb: "♝", bn: "♞", bp: "♟",
+};
+
+function renderUnicodePiece(piece: PieceType, size: number) {
+  return (
+    <Text style={{ fontSize: size * 0.78, lineHeight: size, textAlign: "center", width: size }}>
+      {UNICODE_PIECES[piece]}
+    </Text>
+  );
+}
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Types
@@ -57,7 +69,7 @@ export default function PlayScreen() {
 function ModeSelector({ onSelect }: { onSelect: (m: GameMode) => void }) {
   const scheme = useColorScheme();
   const dark = scheme === "dark";
-  const { t, lang, setLang } = useI18n();
+  const { t } = useI18n();
 
   const modes: {
     id: "random" | "stockfish" | "1v1";
@@ -105,12 +117,6 @@ function ModeSelector({ onSelect }: { onSelect: (m: GameMode) => void }) {
             {t("choose.mode.sub")}
           </Text>
         </View>
-        <Pressable
-          onPress={() => setLang(lang === "es" ? "en" : "es")}
-          style={[selStyles.langBtn, { backgroundColor: dark ? "#222" : "#e0e0e0" }]}
-        >
-          <Text style={{ fontSize: 16 }}>{lang === "es" ? "🇪🇸" : "🇺🇸"}</Text>
-        </Pressable>
       </View>
 
       <View style={selStyles.cards}>
@@ -217,6 +223,7 @@ function PlaySession({
   const scheme = useColorScheme();
   const dark = scheme === "dark";
   const { t } = useI18n();
+  const settings = useSettings();
 
   const textColor = useThemeColor({}, "text");
   const subText = useThemeColor({}, "icon");
@@ -234,11 +241,10 @@ function PlaySession({
 
   // ── Stockfish ────────────────────────────────────────────────────
   const sfWebViewRef = useRef<StockfishWebViewRef>(null);
-  const [skillLevel, setSkillLevelState] = useState(10);
 
-  const { status, bestMove, handleEngineMessage, setSkillLevel, requestMove: requestMoveHook } =
+  const { status, bestMove, handleEngineMessage, requestMove: requestMoveHook } =
     useStockfish(sfWebViewRef, {
-      skillLevel,
+      skillLevel: settings.skillLevel,
       depth: 15,
       moveTimeMs: 1500,
     });
@@ -283,13 +289,15 @@ function PlaySession({
     } else if (mode === "1v1") {
       // Flip the board after a short pause so the next player looks at their pieces
       setTimeout(() => {
-        setFlipped((f) => !f);
+        if (settings.autoflip) {
+          setFlipped((f) => !f);
+        }
         bump();
       }, 350);
     }
-  }, [chess, bump, mode]);
+  }, [chess, bump, mode, settings.autoflip]);
 
-  const status2 = describeGameState(chess, mode, t, skillLevel);
+  const status2 = describeGameState(chess, mode, t, settings.skillLevel);
 
   // ── Skill level slider (Stockfish only) ─────────────────────────
   const accentForMode = {
@@ -364,48 +372,15 @@ function PlaySession({
                 : "white"
             }
             onMove={handleMove}
+            colors={settings.themeColors}
+            showCoordinates={settings.showCoordinates}
+            soundEnabled={settings.sounds}
+            premovesEnabled={mode !== "1v1" ? settings.premoves : false}
+            renderPiece={settings.piecesFormat === "UNICODE" ? renderUnicodePiece : undefined}
           />
         </View>
 
-        {/* Stockfish skill level control */}
-        {mode === "stockfish" && (
-          <View style={gameStyles.skillRow}>
-            <Text style={[gameStyles.skillLabel, { color: subText }]}>
-              {t("skill.level", { level: skillLevel })}
-            </Text>
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={gameStyles.skillPips}
-            >
-              {Array.from({ length: 21 }, (_, i) => i).map((lvl) => (
-                <Pressable
-                  key={lvl}
-                  onPress={() => {
-                    setSkillLevelState(lvl);
-                    setSkillLevel(lvl);
-                  }}
-                  style={[
-                    gameStyles.pip,
-                    {
-                      backgroundColor:
-                        lvl === skillLevel ? accentForMode : dark ? "#333" : "#ddd",
-                    },
-                  ]}
-                >
-                  <Text
-                    style={[
-                      gameStyles.pipText,
-                      { color: lvl === skillLevel ? "#fff" : subText },
-                    ]}
-                  >
-                    {lvl}
-                  </Text>
-                </Pressable>
-              ))}
-            </ScrollView>
-          </View>
-        )}
+        {/* Stockfish skill level control (Removed: Now in Settings Tab) */}
 
         {/* Actions */}
         <View style={gameStyles.actions}>

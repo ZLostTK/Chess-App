@@ -29,11 +29,17 @@ export default function TabLayout() {
         <Icon sf="flame.fill" />
         <Label>{t("nav.smoke")}</Label>
       </NativeTabs.Trigger>
+      <NativeTabs.Trigger name="settings">
+        <Icon sf="gearshape.fill" />
+        <Label>{t("nav.settings")}</Label>
+      </NativeTabs.Trigger>
 
       {/* @ts-expect-error unstable-native-tabs types are missing Slot */}
       <NativeTabs.Slot name="play" />
       {/* @ts-expect-error unstable-native-tabs types are missing Slot */}
       <NativeTabs.Slot name="smoke" />
+      {/* @ts-expect-error unstable-native-tabs types are missing Slot */}
+      <NativeTabs.Slot name="settings" />
     </NativeTabs>
   );
 }
