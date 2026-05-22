@@ -138,6 +138,49 @@ export default function SettingsScreen() {
         </View>
       </View>
 
+      {/* Board Size */}
+      <View style={[styles.card, { backgroundColor: cardBg }]}>
+        <View style={styles.rowTitle}>
+          <Text style={[styles.cardTitle, { color: textColor }]}>{t("settings.boardSize")}</Text>
+          <HelpIcon titleKey="settings.boardSize" descKey="settings.boardSize.desc" />
+        </View>
+        <View style={styles.segmentRow}>
+          <SegmentBtn
+            active={settings.boardSize === "auto"}
+            label={t("settings.boardSize.auto")}
+            onPress={() => settings.setBoardSize("auto")}
+            accent={accent}
+          />
+          <SegmentBtn
+            active={settings.boardSize === 320}
+            label={t("settings.boardSize.320")}
+            onPress={() => settings.setBoardSize(320)}
+            accent={accent}
+          />
+          <SegmentBtn
+            active={settings.boardSize === 400}
+            label={t("settings.boardSize.400")}
+            onPress={() => settings.setBoardSize(400)}
+            accent={accent}
+          />
+        </View>
+      </View>
+
+      {/* Animation Delay */}
+      <View style={[styles.card, { backgroundColor: cardBg }]}>
+        <View style={styles.rowTitle}>
+          <Text style={[styles.cardTitle, { color: textColor }]}>{t("settings.animationDelay")}</Text>
+          <HelpIcon titleKey="settings.animationDelay" descKey="settings.animationDelay.desc" />
+        </View>
+        <Text style={[styles.skillValue, { color: accent }]}>{settings.animationDelay}ms</Text>
+        <AnimationDelaySlider
+          value={settings.animationDelay}
+          onChange={settings.setAnimationDelay}
+          accent={accent}
+          dark={dark}
+        />
+      </View>
+
       {/* Switches */}
       <View style={[styles.card, { backgroundColor: cardBg, paddingVertical: 8 }]}>
         <SwitchRow
@@ -288,6 +331,48 @@ function SkillSlider({ value, onChange, accent, dark }: any) {
           {
             left: `${pct * 100}%`,
             backgroundColor: dark ? "#fff" : "#fff",
+            borderColor: accent,
+          }
+        ]}
+      />
+    </View>
+  );
+}
+
+// Animation delay slider: 150ms – 600ms
+function AnimationDelaySlider({ value, onChange, accent, dark }: any) {
+  const MIN = 150, MAX = 600;
+  const [width, setWidth] = useState(0);
+
+  const handleTouch = (e: GestureResponderEvent) => {
+    if (width === 0) return;
+    const x = e.nativeEvent.locationX;
+    const pct = Math.max(0, Math.min(1, x / width));
+    const ms = Math.round((MIN + pct * (MAX - MIN)) / 25) * 25;
+    onChange(Math.max(MIN, Math.min(MAX, ms)));
+  };
+
+  const pct = (value - MIN) / (MAX - MIN);
+
+  return (
+    <View
+      style={styles.sliderWrap}
+      onLayout={(e) => setWidth(e.nativeEvent.layout.width)}
+      onStartShouldSetResponder={() => true}
+      onResponderTerminationRequest={() => false}
+      onResponderGrant={handleTouch}
+      onResponderMove={handleTouch}
+    >
+      <View pointerEvents="none" style={[styles.sliderTrack, { backgroundColor: dark ? "#333" : "#ddd" }]}>
+        <View style={[styles.sliderFill, { width: `${pct * 100}%`, backgroundColor: accent }]} />
+      </View>
+      <View
+        pointerEvents="none"
+        style={[
+          styles.sliderThumb,
+          {
+            left: `${pct * 100}%`,
+            backgroundColor: "#fff",
             borderColor: accent,
           }
         ]}

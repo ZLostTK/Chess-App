@@ -73,7 +73,20 @@ const translations = {
     "settings.skillLevel.desc": "Sets the strength of the Stockfish engine, from 0 (easiest) to 20 (Grandmaster level).",
     "settings.help.title": "About Option",
     "settings.help.close": "Close",
-    "nav.settings": "Settings"
+    "nav.settings": "Settings",
+    "settings.boardSize": "Board Size",
+    "settings.boardSize.desc": "Choose the board display size: Auto adapts to the screen, 320px is compact, 400px is larger.",
+    "settings.boardSize.auto": "Auto",
+    "settings.boardSize.320": "320px",
+    "settings.boardSize.400": "400px",
+    "settings.animationDelay": "Animation Speed",
+    "settings.animationDelay.desc": "How long piece movement animations take, from 150ms (snappy) to 600ms (cinematic).",
+    "play.choose.color": "Play as:",
+    "play.color.white": "♔ White",
+    "play.color.black": "♚ Black",
+    "play.color.random": "🎲 Random",
+    "btn.undo": "↩",
+    "btn.redo": "↪"
   },
   es: {
     // Mode Selector
@@ -145,7 +158,20 @@ const translations = {
     "settings.skillLevel.desc": "Ajusta la fuerza del motor Stockfish. El nivel 0 es el más fácil y el nivel 20 equivale a un Gran Maestro.",
     "settings.help.title": "¿Qué hace esto?",
     "settings.help.close": "Cerrar",
-    "nav.settings": "Ajustes"
+    "nav.settings": "Ajustes",
+    "settings.boardSize": "Tamaño del Tablero",
+    "settings.boardSize.desc": "Elige el tamaño del tablero: Auto se adapta a la pantalla, 320px es compacto y 400px es más grande.",
+    "settings.boardSize.auto": "Auto",
+    "settings.boardSize.320": "320px",
+    "settings.boardSize.400": "400px",
+    "settings.animationDelay": "Velocidad de Animación",
+    "settings.animationDelay.desc": "Duración de las animaciones de movimiento de piezas, de 150ms (rápido) a 600ms (cinematográfico).",
+    "play.choose.color": "Jugar como:",
+    "play.color.white": "♔ Blancas",
+    "play.color.black": "♚ Negras",
+    "play.color.random": "🎲 Aleatorio",
+    "btn.undo": "↩",
+    "btn.redo": "↪"
   }
 } as const;
 

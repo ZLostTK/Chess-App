@@ -19,6 +19,10 @@ export interface SettingsContextType {
   setSounds: (val: boolean) => void;
   premoves: boolean;
   setPremoves: (val: boolean) => void;
+  boardSize: "auto" | 320 | 400;
+  setBoardSize: (size: "auto" | 320 | 400) => void;
+  animationDelay: number;
+  setAnimationDelay: (ms: number) => void;
   
   // Helper to map theme selection to color palettes
   themeColors: typeof THEME_BLUE;
@@ -34,6 +38,8 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
   const [piecesFormat, setPiecesFormat] = useState<PiecesFormat>("PNG");
   const [sounds, setSounds] = useState(true);
   const [premoves, setPremoves] = useState(true);
+  const [boardSize, setBoardSize] = useState<"auto" | 320 | 400>("auto");
+  const [animationDelay, setAnimationDelay] = useState(150);
 
   const themeColors = useMemo(() => {
     switch (theme) {
@@ -54,9 +60,11 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
       piecesFormat, setPiecesFormat,
       sounds, setSounds,
       premoves, setPremoves,
+      boardSize, setBoardSize,
+      animationDelay, setAnimationDelay,
       themeColors,
     }),
-    [skillLevel, autoflip, showCoordinates, theme, piecesFormat, sounds, premoves, themeColors]
+    [skillLevel, autoflip, showCoordinates, theme, piecesFormat, sounds, premoves, boardSize, animationDelay, themeColors]
   );
 
   return (
