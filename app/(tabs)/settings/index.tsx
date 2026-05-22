@@ -92,7 +92,7 @@ export default function SettingsScreen() {
           <ThemePreview
             active={settings.theme === "BLUE"}
             name="BLUE"
-            colors={["#eff4f5", "#779556"]} // Approximated visually
+            colors={["#dee3e6", "#8ca2ad"]}
             onPress={() => settings.setTheme("BLUE")}
             accent={accent}
             dark={dark}
@@ -100,7 +100,7 @@ export default function SettingsScreen() {
           <ThemePreview
             active={settings.theme === "GREEN"}
             name="GREEN"
-            colors={["#ffffdd", "#86a666"]}
+            colors={["#eeeed2", "#769656"]}
             onPress={() => settings.setTheme("GREEN")}
             accent={accent}
             dark={dark}
@@ -274,13 +274,15 @@ function SkillSlider({ value, onChange, accent, dark }: any) {
       style={styles.sliderWrap}
       onLayout={(e) => setWidth(e.nativeEvent.layout.width)}
       onStartShouldSetResponder={() => true}
+      onResponderTerminationRequest={() => false}
       onResponderGrant={handleTouch}
       onResponderMove={handleTouch}
     >
-      <View style={[styles.sliderTrack, { backgroundColor: dark ? "#333" : "#ddd" }]}>
+      <View pointerEvents="none" style={[styles.sliderTrack, { backgroundColor: dark ? "#333" : "#ddd" }]}>
         <View style={[styles.sliderFill, { width: `${pct * 100}%`, backgroundColor: accent }]} />
       </View>
       <View
+        pointerEvents="none"
         style={[
           styles.sliderThumb,
           {

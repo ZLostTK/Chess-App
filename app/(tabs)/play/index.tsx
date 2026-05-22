@@ -289,13 +289,11 @@ function PlaySession({
     } else if (mode === "1v1") {
       // Flip the board after a short pause so the next player looks at their pieces
       setTimeout(() => {
-        if (settings.autoflip) {
-          setFlipped((f) => !f);
-        }
+        setFlipped(chess.turn() === "b");
         bump();
       }, 350);
     }
-  }, [chess, bump, mode, settings.autoflip]);
+  }, [chess, bump, mode]);
 
   const status2 = describeGameState(chess, mode, t, settings.skillLevel);
 
@@ -364,13 +362,10 @@ function PlaySession({
             ref={ref}
             chess={chess}
             boardSize={boardSize}
-            playerSide={
-              mode === "1v1"
-                ? flipped
-                  ? "black"
-                  : "white"
-                : "white"
+            boardOrientation={
+              mode === "1v1" && settings.autoflip && flipped ? "black" : "white"
             }
+            playerSide={mode === "1v1" ? "both" : "white"}
             onMove={handleMove}
             colors={settings.themeColors}
             showCoordinates={settings.showCoordinates}
